@@ -1,0 +1,61 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>Grid Table Refresh</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+	<link rel='stylesheet' href="src/gridx/tests/support/common.css" />
+	<style type="text/css">
+		::selection {
+			background: #ffb7b7; /* Safari */
+		}
+		span.highlight{
+			background: #ffb7b7; /* Safari */
+			
+		}
+		.gridx {
+			width: 700px;
+			height: 370px;
+		}
+
+		.dropDownSizer,
+		.gridxRtl .linkPager,
+		.gridxRtl .linkSizer,
+		.quickFilter {
+			text-align: right;
+		}
+
+		.dijitToolbar {
+			background: none !important;
+			border-bottom: none !important;
+		}
+
+		.gridxRtl .dropDownSizer,
+		.linkPager,
+		.linkSizer,
+		.gridxRtl .quickFilter {
+			text-align: left;
+		}
+	</style>
+	<script type="text/javascript" src="src/dojo/dojo.js" data-dojo-config="async: true"></script>
+	<script type="text/javascript" src='src/gridx/tests/support/common.js'></script>
+	<script type="text/javascript" src='test_grid_table_search.js'></script>
+</head>
+<body class='claro'>
+	<h1 class='title' tabindex='0' onfocus='this.style.color="blue"' onblur='this.style.color=""'>
+		Grid Bar Test
+	</h1>
+	<h2>Gridx table search(text highlight)</h2>
+	<input type='text' id='keyword' name='keyword'>
+	<button onclick='tableSearch()'>search</button>
+	<button onclick='clearSearch()'>search</button>
+
+	<div id='grid1' jsid='grid1' data-dojo-type='gridx.Grid' data-dojo-props='
+		cacheClass: "gridx/core/model/cache/Sync",
+		store: store,
+		structure: layout,
+		barTop: grid1Top,
+		selectRowTriggerOnCell: true,
+		modules: mods
+	'></div>
+</body>
+</html>
