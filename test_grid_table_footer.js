@@ -89,7 +89,7 @@ require([
 		var _totalSize = grid.model._cache.totalSize >= 0 ? grid.model._cache.totalSize : grid.model._cache.size();
 		// this.domNode.innerHTML += string.substitute(grid.nls.filterBarMsgHasFilterTemplate, [_currentSize, _totalSize, grid.nls.defaultItemsName])
 		
-		this.domNode.innerHTML += "Filter: " + string.substitute(grid.nls.filterBarMsgHasFilterTemplate, [_currentSize, _totalSize, grid.nls.defaultItemsName]);
+		this.domNode.innerHTML += " Filter: " + string.substitute(grid.nls.filterBarMsgHasFilterTemplate, [_currentSize, _totalSize, grid.nls.defaultItemsName]);
 
 		console.log(_currentSize, _totalSize, grid.nls.filterBarMsgHasFilterTemplate);
 	});
