@@ -16,9 +16,6 @@
 			width: 700px;
 			height: 370px;
 		}
-		#gridContainer{
-			height: 400px
-		}
 
 		.dropDownSizer,
 		.gridxRtl .linkPager,
@@ -41,11 +38,24 @@
 	</style>
 	<script type="text/javascript" src="src/dojo/dojo.js" data-dojo-config="async: true"></script>
 	<script type="text/javascript" src='src/gridx/tests/support/common.js'></script>
-	<script type="text/javascript" src='test_grid_table_footer.js'></script>
+	<script type="text/javascript" src='test_grid_column_config.js'></script>
+	<script type="text/javascript">
+		require(['dojo/ready'], function(ready){
+			ready(function(){
+				console.log('in dojo ready');
+				dojo.connect(dojo.byId('configButton'), 'onclick', function(){
+					
+					
+				});
+			});
+		});
+		
+	</script>
 </head>
 <body class='claro'>
+	<button id='configButton'>config column</button>
 	<h1 class='title' tabindex='0' onfocus='this.style.color="blue"' onblur='this.style.color=""'>
-		Grid Bar Test
+		Grid Column Config Test
 	</h1>
 
 	<div id='gridContainer'></div>
