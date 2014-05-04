@@ -30,7 +30,7 @@ require([
 					mods.VirtualVScroller,
 					mods.TouchVScroller
 				],
-				touch: true
+				// touch: true
 			});
 			grid.placeAt('gridContainer');
 			grid.startup();
