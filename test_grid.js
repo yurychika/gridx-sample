@@ -28,7 +28,8 @@ require([
 				structure: layout,
 				modules: [
 					mods.VirtualVScroller,
-					mods.TouchVScroller
+					"gridx/modules/TouchScroll",
+					// mods.TouchVScroller
 				],
 				// touch: true
 			});
