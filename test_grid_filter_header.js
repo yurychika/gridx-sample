@@ -27,23 +27,36 @@ require([
 	Toolbar, Button, ToggleButton, DropDownButton, Menu, MenuItem){
 	
 	window.doSearch = false;
+	var showStatus = true;
 	
 	window.tableSearch = function(){
 		window.keyword = document.getElementById('keyword').value;
 		window.doSearch = true;
 		
-		grid1.body.refresh();
+		grid.body.refresh();
 	}
 	
 	window.clearSearch = function(){
 		window.doSearch = false;
-		grid1.body.refresh();
+		grid.body.refresh();
 	}
+
+	window.filterLinkClickHandler = function(){
+		grid.filterBar.showFilterDialog();
+	};
+
+	window.toggleFilterLink = function(){
+		if(showStatus){
+			dojo.query('.filterLink').addClass('hidden');
+		}else{
+			dojo.query('.filterLink').removeClass('hidden');
+		}
+		showStatus = !showStatus;
+	};
 	
 	mods = [
 		modules.ExtendedSelectRow,
 		modules.Pagination,
-		// modules.HeaderRegions,
 		HeaderRegions,
 		modules.Filter,
 		modules.FilterBar,
@@ -58,39 +71,61 @@ require([
 	layout = dataSource.layouts[1];
 
 	parser.parse().then(function(){
-		var callback = function(){
-			grid1.headerRegions.refresh(1);
-			grid1.header.refresh();
-
-			var cols = getFilteredColumns(grid1),
-				found = false;
-			for(var i = 0; i < cols.length; i++){
-				if(cols[i]){
-					var headerNode = dojo.query('[colid=' + cols[i] + '][role=columnheader]')[0];
-
-					if(headerNode){
-						var a = document.createElement('a');
-						a.innerHTML = 'filter';
-						a.href = '#';
-						a.onclick = function(){
-							grid1.filterBar.showFilterDialog();
-						}
-						headerNode.appendChild(a);
-					}
+		for(var k in grid._columnsById){
+				grid._columnsById[k].headerFormatter = function(col){
+				var filteredColumns = getFilteredColumns(grid);
+				if(filteredColumns.indexOf(col.id) >= 0){
+					var condition = getConditionById(col.id)
+					return col.name + '<br>' + 
+						'<a href="#" class="filterLink" onclick="filterLinkClickHandler()">' + 
+						grid.filterBar._getRuleString(condition.condition, condition.value, condition.type);
+						+ '</a>';
 				}
+				return col.name + '<br>' + '<a href="#" class="filterLink" onclick="filterLinkClickHandler()">filter</a>';
 			}
+		}
+		var callback = function(){
+
+		// 	grid.headerRegions.refresh(1);
+			grid.header.refresh();
+
+		// 	var cols = getFilteredColumns(grid),
+		// 		found = false;
+		// 	for(var i = 0; i < cols.length; i++){
+		// 		if(cols[i]){
+		// 			var headerNode = dojo.query('[colid=' + cols[i] + '][role=columnheader]')[0];
+
+		// 			if(headerNode){
+		// 				var a = document.createElement('a');
+		// 				a.innerHTML = 'filter';
+		// 				a.href = '#';
+		// 				a.onclick = function(){
+		// 					grid.filterBar.showFilterDialog();
+		// 				}
+		// 				headerNode.appendChild(a);
+		// 			}
+		// 		}
+		// 	}
 		};
-		dojo.connect(grid1.filter, 'setFilter', callback);
-		dojo.connect(grid1.filter, 'clearFilter', callback);
-		// var hr = grid1.headerRegions;
-		// hr.add(function(col){
-		// 	if(!found) return null;
-		// 	return domConstruct.create('div', {
-		// 		innerHTML: 'filter',
-		// 		style: 'height: 13px; background-color: red;'
-		// 	});
-		// }, 0, 0);
+		dojo.connect(grid.filter, 'setFilter', callback);
+		dojo.connect(grid.filter, 'clearFilter', callback);
 	});
+
+	function getConditionById(colId){
+		var filterData = grid.filterBar.filterData;
+			conditions = filterData && filterData.conditions;
+		if(!conditions) return;
+
+		var temp;
+		for(var i = 0; i < conditions.length; i++){
+			temp = conditions[i];
+
+			if(temp.colId == colId)
+				return temp;
+		}
+
+		return null;
+	}
 
 	function getFilteredColumns(grid){
 		if(!grid) return;

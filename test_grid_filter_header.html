@@ -16,6 +16,9 @@
 			width: 700px;
 			height: 370px;
 		}
+		.hidden{
+			display: none;
+		}
 
 		.dropDownSizer,
 		.gridxRtl .linkPager,
@@ -49,7 +52,8 @@
 		Gridx filter header test page
 	</h1>
 
-	<div id='grid1' jsid='grid1' data-dojo-type='gridx.Grid' data-dojo-props='
+	<button onclick='toggleFilterLink()'>show/hide</button>
+	<div id='grid' jsid='grid' data-dojo-type='gridx.Grid' data-dojo-props='
 		cacheClass: "gridx/core/model/cache/Sync",
 		store: store,
 		structure: layout,
