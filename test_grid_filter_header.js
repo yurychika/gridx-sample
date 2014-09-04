@@ -84,8 +84,9 @@ require([
 				return col.name + '<br>' + '<a href="#" class="filterLink" onclick="filterLinkClickHandler()">filter</a>';
 			}
 		}
-		var callback = function(){
+		grid.header.refresh();
 
+		var callback = function(){
 		// 	grid.headerRegions.refresh(1);
 			grid.header.refresh();
 
